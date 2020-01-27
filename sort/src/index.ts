@@ -4,23 +4,18 @@ import { CharactersCollection } from './CharactersCollections';
 import { LinkList } from './LinkedList';
 
 // const numbersCollection = new NumberCollection([10, 3, -5, 0, 101]);
-// const sorter = new Sorter(numbersCollection);
-// sorter.sort();
-// console.log(numbersCollection);
+// numbersCollection.sort();
+// console.log(numbersCollection.data);
 
 // const characterCollection = new CharactersCollection('Xaayb');
-// const sorterCharacter = new Sorter(characterCollection);
-// sorterCharacter.sort();
+// characterCollection.sort();
 // console.log(characterCollection.data);
 
 const linkedList = new LinkList();
-
 linkedList.add(500);
 linkedList.add(-10);
 linkedList.add(-3);
 linkedList.add(4);
 
-const sorter = new Sorter(linkedList);
-
-sorter.sort();
+linkedList.sort();
 linkedList.print();
