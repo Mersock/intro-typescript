@@ -1,22 +1,18 @@
-import { User } from '../models/user';
+import { User, UserProps } from '../models/user';
+import { View } from './view';
 
-export class UserForm {
-  constructor(public parent: Element, public model: User) {
-    this.bindModel();
-  }
-
-  bindModel(): void {
-    this.model.on('change', () => {
-      this.render();
-    });
-  }
-
+export class UserForm extends View<User, UserProps> {
   eventMap(): { [key: string]: () => void } {
     return {
       'click:.set-age': this.onSetAgeClick,
-      'click:.set-name': this.onSetNameClick
+      'click:.set-name': this.onSetNameClick,
+      'click:.save-model': this.onSaveClick
     };
   }
+
+  onSaveClick = (): void => {
+    this.model.save();
+  };
 
   onSetNameClick = (): void => {
     const input = this.parent.querySelector('input');
@@ -33,40 +29,14 @@ export class UserForm {
 
   template(): string {
     return `
-            <div onClick={this.onClick}>
-            <h1>User Form</h1>
-            <div>user name:${this.model.get('name')}</div>
-            <div>user age:${this.model.get('age')}</div>
-            <input/>
+            <input placeholder="${this.model.get('name')}" />
             <button class="set-name">Change Name</button>
             <button class="set-age">Set Random Age</button>
+            <button class="save-model">Save User</button>
             </div>
             <template>
 
             </template>
         `;
-  }
-
-  bindEvents(fragment: DocumentFragment): void {
-    const eventMap = this.eventMap();
-
-    for (const eventkey in eventMap) {
-      const [eventName, selector] = eventkey.split(':');
-
-      fragment.querySelectorAll(selector).forEach(element => {
-        element.addEventListener(eventName, eventMap[eventkey]);
-      });
-    }
-  }
-
-  render(): void {
-    this.parent.innerHTML = '';
-
-    const templateElement = document.createElement('template');
-    templateElement.innerHTML = this.template();
-
-    this.bindEvents(templateElement.content);
-
-    this.parent.append(templateElement.content);
   }
 }
