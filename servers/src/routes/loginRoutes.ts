@@ -4,7 +4,7 @@ import { Router, Request, Response } from 'express';
  * define request with body.
  */
 interface RequestWithBody extends Request {
-  body: { [key: string]: string | undefined }
+  body: { [key: string]: string | undefined };
 }
 
 const router = Router();
@@ -29,29 +29,35 @@ router.post('/login', (req: RequestWithBody, res: Response) => {
   const { em, pa } = req.body;
 
   if (em && pa && em == 'admin@admin.com' && pa == '1234') {
-    req.session = { loggedIn: true }
-    res.redirect('/')
+    req.session = { loggedIn: true };
+    res.redirect('/');
   } else {
-    res.send('Invalid value')
+    res.send('Invalid value');
   }
 });
 
-router.get('/',(req:Request,res:Response) => {
-    if(req.session && req.session.loggedIn){
-      res.send(`
+router.get('/', (req: Request, res: Response) => {
+  if (req.session && req.session.loggedIn) {
+    res.send(`
         <div>
           <div>You are logged in.</div>
           <a href="/logout">Logout</a>
         <div>
-      `)
-    }else{
-      res.send(`
+      `);
+  } else {
+    res.send(`
         <div>
           <div>You are logged out.</div>
           <a href="/login">Login</a>
         <div>
-      `)
-    }
-})
+      `);
+  }
+});
+
+router.get('/logout', (req: Request, res: Response) => {
+  req.session = undefined;
+
+  res.redirect('/');
+});
 
 export { router };
