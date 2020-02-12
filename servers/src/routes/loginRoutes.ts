@@ -27,12 +27,31 @@ router.get('/login', (req: Request, res: Response) => {
 
 router.post('/login', (req: RequestWithBody, res: Response) => {
   const { em, pa } = req.body;
-  
-  if(em){
-    res.send(em.toUpperCase())
-  }else{
-    res.send('Please Provide an Email.')
+
+  if (em && pa && em == 'admin@admin.com' && pa == '1234') {
+    req.session = { loggedIn: true }
+    res.redirect('/')
+  } else {
+    res.send('Invalid value')
   }
 });
+
+router.get('/',(req:Request,res:Response) => {
+    if(req.session && req.session.loggedIn){
+      res.send(`
+        <div>
+          <div>You are logged in.</div>
+          <a href="/logout">Logout</a>
+        <div>
+      `)
+    }else{
+      res.send(`
+        <div>
+          <div>You are logged out.</div>
+          <a href="/login">Login</a>
+        <div>
+      `)
+    }
+})
 
 export { router };
