@@ -22,7 +22,7 @@ class LoginControllers {
 
   @post('/login')
   @bodyValidator('email', 'password')
-  postLogin(req: Request, res: Response): void {
+  postLogin(req: Request, res: Response) {
     const { email, password } = req.body;
 
     if (email == 'admin@admin.com' && password == '1234') {
@@ -31,5 +31,12 @@ class LoginControllers {
     } else {
       res.send('Invalid value');
     }
+  }
+
+  @get('/logout')
+  getLogout(req: Request, res: Response) {
+    req.session = undefined;
+
+    res.redirect('/');
   }
 }

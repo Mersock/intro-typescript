@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { Metadatakey } from './metadataKey';
 import { RequestHandler } from 'express';
 
-export function use(middleware: RequestHandler) {
+export function use(middleware: RequestHandler): any {
   return function(target: any, key: string, desc: PropertyDecorator) {
     const middlewares =
       Reflect.getMetadata(Metadatakey.middleware, target, key) || [];
