@@ -18,7 +18,7 @@ const url = 'http://jsonplaceholder.typicode.com/todos';
 export const fetchTodos = () => {
   return async (dispath: Dispatch) => {
     const response = await axios.get<Todo[]>(url);
-
+    // console.log(response);
     dispath<FetchTodosAction>({
       type: ActionTypes.fetchTodos,
       payload: response.data
