@@ -5,22 +5,26 @@ interface AppProps {
   color?: string;
 }
 
-// function App(props: AppProps) {
-//   const [counter, setCounter]: [number, Function] = useState(0);
+// const App = (props: AppProps): JSX.Element => {
+//   return <div>{props.color}</div>;
+// };
 
-//   function onIncrement(): void {
-//     return setCounter(counter + 1);
-//   }
+function App(props: AppProps) {
+  const [counter, setCounter]: [number, Function] = useState(0);
 
-//   function onDecrement(): void {
-//     return setCounter(counter - 1);
-//   }
+  function onIncrement(): void {
+    return setCounter(counter + 1);
+  }
 
-//   return (
-//     <div>
-//       <button onClick={onIncrement}>Increment</button>
-//       <button onClick={onDecrement}>Decrement</button>
-//       {counter}
-//     </div>
-//   );
-// }
+  function onDecrement(): void {
+    return setCounter(counter - 1);
+  }
+
+  return (
+    <div>
+      <button onClick={onIncrement}>Increment</button>
+      <button onClick={onDecrement}>Decrement</button>
+      {counter}
+    </div>
+  );
+}
